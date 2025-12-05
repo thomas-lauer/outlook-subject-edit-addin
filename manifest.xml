@@ -1,1 +1,132 @@
-<xml>placeholder</xml>
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
+  <Id>c1f4a3de-1111-2222-3333-444455556666</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Dein Firmenname</ProviderName>
+  <DefaultLocale>de-DE</DefaultLocale>
+  <DisplayName DefaultValue="Betreff-Editor Add-in" />
+  <Description DefaultValue="Outlook-Add-in zum Bearbeiten des Betreffs einer bestehenden E-Mail in einem Dialogfenster." />
+  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-80.png" />
+  <SupportUrl DefaultValue="https://example.com/support" />
+
+  <AppDomains>
+    <AppDomain>https://localhost:3000</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+
+  <Requirements>
+    <Sets DefaultMinVersion="1.8">
+      <Set Name="Mailbox" />
+    </Sets>
+  </Requirements>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3000/dialog.html" />
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteMailbox</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
+  </Rule>
+
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides
+    xsi:type="mailappor:VersionOverridesV1_0"
+    xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0">
+
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.8">
+        <bt:Set Name="Mailbox" />
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+
+        <DesktopFormFactor>
+
+          <FunctionFile
+            resid="residFunctionFileUrl" />
+
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group
+                id="msgReadGroup"
+                label="Betreff-Editor">
+
+                <Control
+                  xsi:type="Button"
+                  id="msgReadOpenDialogButton">
+                  <Label resid="residButtonLabel" />
+                  <Supertip>
+                    <Title resid="residButtonLabel" />
+                    <Description resid="residButtonDescription" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="residIcon16" />
+                    <bt:Image size="32" resid="residIcon32" />
+                    <bt:Image size="80" resid="residIcon80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>showSubjectDialog</FunctionName>
+                  </Action>
+                </Control>
+
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image
+          id="residIcon16"
+          DefaultValue="https://localhost:3000/assets/icon-16.png" />
+        <bt:Image
+          id="residIcon32"
+          DefaultValue="https://localhost:3000/assets/icon-32.png" />
+        <bt:Image
+          id="residIcon80"
+          DefaultValue="https://localhost:3000/assets/icon-80.png" />
+      </bt:Images>
+
+      <bt:Urls>
+        <bt:Url
+          id="residFunctionFileUrl"
+          DefaultValue="https://localhost:3000/js/commands.js" />
+      </bt:Urls>
+
+      <bt:ShortStrings>
+        <bt:String
+          id="residButtonLabel"
+          DefaultValue="Betreff bearbeiten" />
+      </bt:ShortStrings>
+
+      <bt:LongStrings>
+        <bt:String
+          id="residButtonDescription"
+          DefaultValue="Öffnet ein Dialogfenster, um den Betreff der ausgewählten E-Mail zu bearbeiten." />
+      </bt:LongStrings>
+    </Resources>
+
+  </VersionOverrides>
+</OfficeApp>
